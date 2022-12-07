@@ -45,25 +45,27 @@ function updateChart(Chart,res){
 }
 
 function countryClicked(element){
+  let code="";
   if(element){
-      let code=element.target.getAttribute("id");
+       code =element.target.getAttribute("id");
   }
   else code="MA"
+
+  console.log(code);
    let newXhr = new XMLHttpRequest();
    newXhr.open("Get","https://api.covid19api.com/dayone/country/"+ code,true);
 
    newXhr.onreadystatechange=()=>{
      if(newXhr.status==200 && newXhr.readyState==4){
     var res = JSON.parse(newXhr.response);
-      
         updateChart(myChart,res);
-   
           }
    }
      newXhr.send();
    
  };
 
+ 
 
 let xhr = new XMLHttpRequest();
 xhr.open("Get","https://api.covid19api.com/countries",true);
@@ -77,14 +79,12 @@ xhr.onreadystatechange=()=>{
             element.appendChild(txt);
             element.classList.add("country");
             sidebar.appendChild(element);
-            countryClicked(null);
-          
-
             element.addEventListener("click",countryClicked);
             
         };
         
     }
+    countryClicked(null);
 }
 xhr.send();
 
